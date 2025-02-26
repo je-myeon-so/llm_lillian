@@ -5,3 +5,5 @@ konlpy
 mecab-python3
 kss
 numpy
+pydantic
+pdfplumber
