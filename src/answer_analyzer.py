@@ -116,11 +116,11 @@ def generate_follow_up(answer, question, job_role):
 
     JSON 출력 예시:
     {{
-        {
-        "API 응답 속도 최적화 시, 쿼리 최적화 외에도 고려할 수 있는 다른 방법이 있나요?",
-        "SQL 쿼리를 최적화할 때 가장 중요한 기준은 무엇인가요?",
-        "코드 리팩토링 시, 유지보수성을 높이기 위해 가장 중요한 원칙은 무엇인가요?"
-        }
+        
+        'question1': "API 응답 속도 최적화 시, 쿼리 최적화 외에도 고려할 수 있는 다른 방법이 있나요?",
+        'question2': "SQL 쿼리를 최적화할 때 가장 중요한 기준은 무엇인가요?",
+        'question3': "코드 리팩토링 시, 유지보수성을 높이기 위해 가장 중요한 원칙은 무엇인가요?"
+        
     }}
     """
 
@@ -133,10 +133,11 @@ def generate_follow_up(answer, question, job_role):
     try:
         follow_up = json.loads(response.choices[0].message.content)
     except json.JSONDecodeError:
-        follow_up = {"후속 질문 리스트": ["API 속도 최적화를 할 때 다른 방법도 고려해 보셨나요?"]}
-
-    # 최대 3개 질문만 유지
-    follow_up["후속 질문 리스트"] = follow_up["후속 질문 리스트"][:3]
+        follow_up = {"후속 질문 리스트": {
+            'question1': "API 응답 속도 최적화 시, 쿼리 최적화 외에도 고려할 수 있는 다른 방법이 있나요?",
+            'question2': "SQL 쿼리를 최적화할 때 가장 중요한 기준은 무엇인가요?",
+            'question3': "코드 리팩토링 시, 유지보수성을 높이기 위해 가장 중요한 원칙은 무엇인가요?"
+        }}
 
     return follow_up
 
