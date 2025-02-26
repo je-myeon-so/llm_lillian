@@ -6,3 +6,13 @@ pydantic
 pdfplumber
 fastapi
 uvicorn
+dotenv
+
+#코드스페이스에서 서버 띄우는과정에 설치한 파일
+#pip install --no-cache-dir PyYAML==6.0 --no-build-isolation
+#pip install --no-cache-dir Cython
+#pip install --upgrade pip setuptools wheel
+#pip install --upgrade build
+#pip install -r requirements.txt
+#pip install fastapi.middleware.cors
+#pip install python-multipart
