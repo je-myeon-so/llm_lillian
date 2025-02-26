@@ -1,9 +1,8 @@
-langchain
 openai
 kiwipiepy
-konlpy
 mecab-python3
-kss
 numpy
 pydantic
 pdfplumber
+fastapi
+uvicorn
