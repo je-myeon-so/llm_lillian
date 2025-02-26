@@ -1,16 +1,21 @@
 from fastapi import FastAPI
+from routes import question_routes 
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(
-    title="Job Qualification Analysis API",
-    description="이력서 분석 및 면접 피드백을 제공하는 API",
-    version="1.0.0"
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 모든 도메인 허용
+    allow_credentials=True,
+    allow_methods=["*"],  # 모든 HTTP 메서드 허용
+    allow_headers=["*"],  # 모든 헤더 허용
 )
 
-# 기본 라우트
+app.include_router(question_routes.router)
+
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to the Job Qualification Analysis API"}
+    return {"message": "Hello, FastAPI is running!"}
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
