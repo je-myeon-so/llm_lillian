@@ -96,7 +96,7 @@ def analyze_text_with_gpt(text, question, job_role):
     else:
         json_response = {"error": "GPT 응답에서 JSON 데이터를 찾을 수 없습니다.", "raw_output": full_response}
 
-    return full_response, json_response
+    return json_response
 
 
 def generate_follow_up(answer, question, job_role):
@@ -145,7 +145,7 @@ def analyze_answer(question, answer, job_role):
     """면접 답변을 종합적으로 분석하여 반환"""
     cleaned_answer = clean_text(answer)
     filler_issues = detect_filler_words(cleaned_answer)
-    sample, analysis_result = analyze_text_with_gpt(cleaned_answer, question, job_role)
+    analysis_result = analyze_text_with_gpt(cleaned_answer, question, job_role)
     follow_up_question = generate_follow_up(cleaned_answer, question, job_role)
 
     final_result = {
