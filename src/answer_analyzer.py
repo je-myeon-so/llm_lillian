@@ -116,11 +116,11 @@ def generate_follow_up(answer, question, job_role):
 
     JSON 출력 예시:
     {{
-        "후속 질문 리스트": [
-            "API 응답 속도 최적화 시, 쿼리 최적화 외에도 고려할 수 있는 다른 방법이 있나요?",
-            "SQL 쿼리를 최적화할 때 가장 중요한 기준은 무엇인가요?",
-            "코드 리팩토링 시, 유지보수성을 높이기 위해 가장 중요한 원칙은 무엇인가요?"
-        ]
+        {
+        "API 응답 속도 최적화 시, 쿼리 최적화 외에도 고려할 수 있는 다른 방법이 있나요?",
+        "SQL 쿼리를 최적화할 때 가장 중요한 기준은 무엇인가요?",
+        "코드 리팩토링 시, 유지보수성을 높이기 위해 가장 중요한 원칙은 무엇인가요?"
+        }
     }}
     """
 
@@ -145,7 +145,7 @@ def analyze_answer(question, answer, job_role):
     """면접 답변을 종합적으로 분석하여 반환"""
     cleaned_answer = clean_text(answer)
     filler_issues = detect_filler_words(cleaned_answer)
-    analysis_result = analyze_text_with_gpt(cleaned_answer, question, job_role)
+    sample, analysis_result = analyze_text_with_gpt(cleaned_answer, question, job_role)
     follow_up_question = generate_follow_up(cleaned_answer, question, job_role)
 
     final_result = {
