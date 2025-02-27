@@ -54,10 +54,10 @@ class Feedback(Base):
     answerid = Column(Integer, ForeignKey("UserAnswer.answerid"))
     questionid = Column(Integer, ForeignKey("Question.questionid"))
     username = Column(String(36), ForeignKey("user.name"))
-    errortext = Column(String(255), nullable=True)
+    errortext = Column(Text, nullable=True)
     errortype = Column(String(36), nullable=True)
-    feedback = Column(String(36), nullable=True)
-    suggestion = Column(String(255), nullable=True)
+    feedback = Column(Text, nullable=True)
+    suggestion = Column(Text, nullable=True)
 
     # 관계 설정
     user_answer = relationship("UserAnswer", back_populates="feedbacks")
