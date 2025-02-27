@@ -32,6 +32,7 @@ async def get_feedback(questionnum: int, username: str, db: Session = Depends(ge
         }
 
         return {
+            "question": question.questiontext,
             "original_answer": answer.answertext,
             "analysis_result": analysis_result
         }
