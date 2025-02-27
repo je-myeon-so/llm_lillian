@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from resume_answer import extract_text_from_pdf, generate_interview_question
+from src.resume_answer import extract_text_from_pdf, generate_interview_question
 
 router = APIRouter()
 

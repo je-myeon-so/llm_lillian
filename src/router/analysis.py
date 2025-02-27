@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from answer_analyzer import analyze_text_with_gpt
-from answer_analyzer import generate_follow_up
+from src.answer_analyzer import analyze_text_with_gpt
+from src.answer_analyzer import generate_follow_up
 
 router = APIRouter()
 
