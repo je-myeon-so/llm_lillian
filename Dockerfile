@@ -1,13 +1,12 @@
 FROM python:3.12.7-slim
 
-WORKDIR /fastapi
+COPY ./src /src
+WORKDIR /src
 
-COPY ./requirements.txt /fastapi/
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /fastapi/requirements.txt
+#COPY src/* /src/
 
-COPY src /fastapi
+EXPOSE 8000
 
-ENV PYTHONPATH=/fastapi
-
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
