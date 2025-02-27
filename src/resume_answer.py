@@ -2,7 +2,7 @@ import pdfplumber
 import json
 import re
 import openai
-from config import OPENAI_API_KEY  # OpenAI API 키 설정
+from src.config import OPENAI_API_KEY  # OpenAI API 키 설정
 
 # 🔹 OpenAI 클라이언트 생성
 client = openai.OpenAI(api_key=OPENAI_API_KEY)
