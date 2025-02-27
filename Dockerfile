@@ -4,7 +4,7 @@ WORKDIR /fastapi
 
 COPY ./requirements.txt /fastapi/
 
-RUN pip install --no-cache-dir --upgrade -r /src/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /fastapi/requirements.txt
 
 COPY src /fastapi
 
