@@ -1,8 +1,16 @@
 from fastapi import FastAPI
 import uvicorn
+from src.backend.database_config import engine
+from src.backend.model import Question, UserAnswer, Feedback, User
 from src.router.analysis import router as api_router_analysis
 from src.router.question_routes import router as api_router_generate
 from src.stt.stt import router as api_router_stt
+
+# 데이터베이스 테이블 생성
+User.metadata.create_all(bind=engine)
+Question.metadata.create_all(bind=engine)
+UserAnswer.metadata.create_all(bind=engine)
+Feedback.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Interview Analysis API",
