@@ -4,10 +4,10 @@ from urllib.parse import quote
 
 # DB 접속 정보
 USER = "root"
-PWD = quote("kim62583@@")  # URL 인코딩 적용
+PWD = quote("ysy5282!")  # URL 인코딩 적용
 HOST = "localhost"  # 포트 번호 제거
 PORT = 3306
-DATABASE = "test"
+DATABASE = "jemyeonso"
 
 # DB URL 설정
 DB_URL = f'mysql+pymysql://{USER}:{PWD}@{HOST}:{PORT}/{DATABASE}?charset=utf8mb4'
