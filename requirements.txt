@@ -6,4 +6,5 @@ pydantic
 pdfplumber
 fastapi
 uvicorn
-router
+re
+dotenv
