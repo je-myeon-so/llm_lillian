@@ -15,25 +15,6 @@ def clean_text(text):
     text = re.sub(r'\s+', ' ', text).strip()
     return text
 
-
-def detect_filler_words(text):
-    """발음 실수 감지 (불필요한 필러 단어)"""
-    filler_patterns = [
-        r"\b어+\.{0,2}\b",  # "어.."
-        r"\b음+\.{0,2}\b",  # "음.."
-        r"\b그+\.{0,2}\b",  # "그.."
-        r"\b저기+\.{0,2}\b",  # "저기.."
-        r"\.{3,}",  # "..."
-    ]
-
-    matches = []
-    for pattern in filler_patterns:
-        found = re.findall(pattern, text)
-        if found:
-            matches.extend(found)
-
-    return matches if matches else None
-
 def analyze_text_with_gpt(text, question, job_role):
     """GPT를 이용하여 면접관의 입장에서 문법적 오류, 전문성 부족, 발음 실수를 분석하고 JSON 데이터로 변환"""
     prompt = f"""
@@ -111,33 +92,49 @@ def generate_follow_up(answer, question, job_role):
     - 후속 질문은 반드시 직무 관련 기술, 원리, 또는 실무 경험과 관련된 것이어야 합니다.
     - 지원자가 언급한 경험에 대해 구체적인 후속 질문을 만드세요.
     - 단순한 추가 설명 요청이 아니라, 실무에서 어떻게 적용하는지 또는 깊이 있는 지식을 확인하는 질문이어야 합니다.
-    - 3개의 질문을 생성하세요.
+    - 1개의 질문을 생성하세요.
     - JSON 형식으로 제공해주세요.
 
-    JSON 출력 예시:
+    **JSON 출력 예시 (반드시 이 형식을 따르세요):**
+    ```json
     {{
-        
-        'question1': "API 응답 속도 최적화 시, 쿼리 최적화 외에도 고려할 수 있는 다른 방법이 있나요?",
-        'question2': "SQL 쿼리를 최적화할 때 가장 중요한 기준은 무엇인가요?",
-        'question3': "코드 리팩토링 시, 유지보수성을 높이기 위해 가장 중요한 원칙은 무엇인가요?"
-        
+        "question": {{
+            "question_text": "이 직무에 지원하게 된 동기는 무엇인가요?"
+        }}
     }}
+    ```
+
+    **반드시 JSON 형식만 출력하세요. 추가 설명을 하지 마세요.**
     """
 
     response = client.chat.completions.create(
         model="gpt-4o",
-        messages=[{"role": "system", "content": "당신은 기술 면접 질문을 잘 만드는 전문가입니다."},
-                  {"role": "user", "content": prompt}]
+        messages=[
+            {"role": "system", "content": "당신은 기술 면접 질문을 잘 만드는 전문가입니다."},
+            {"role": "user", "content": prompt}
+        ]
     )
 
-    try:
-        follow_up = json.loads(response.choices[0].message.content)
-    except json.JSONDecodeError:
-        follow_up = {"후속 질문 리스트": {
-            'question1': "API 응답 속도 최적화 시, 쿼리 최적화 외에도 고려할 수 있는 다른 방법이 있나요?",
-            'question2': "SQL 쿼리를 최적화할 때 가장 중요한 기준은 무엇인가요?",
-            'question3': "코드 리팩토링 시, 유지보수성을 높이기 위해 가장 중요한 원칙은 무엇인가요?"
-        }}
+    # Extract JSON from response
+    full_response = response.choices[0].message.content.strip()
+    json_match = re.search(r'\{[\s\S]*\}', full_response)
+
+    if json_match:
+        json_text = json_match.group(0)
+        try:
+            follow_up = json.loads(json_text)
+        except json.JSONDecodeError:
+            follow_up = {
+                "question": {
+                    "question_text": "이 직무에 지원하게 된 동기는 무엇인가요?"
+                }
+            }
+    else:
+        follow_up = {
+            "question": {
+                "question_text": "이 직무에 지원하게 된 동기는 무엇인가요?"
+            }
+        }
 
     return follow_up
 
@@ -145,13 +142,11 @@ def generate_follow_up(answer, question, job_role):
 def analyze_answer(question, answer, job_role):
     """면접 답변을 종합적으로 분석하여 반환"""
     cleaned_answer = clean_text(answer)
-    filler_issues = detect_filler_words(cleaned_answer)
     analysis_result = analyze_text_with_gpt(cleaned_answer, question, job_role)
     follow_up_question = generate_follow_up(cleaned_answer, question, job_role)
 
     final_result = {
         "원본 답변": answer,
-        "정리된 답변": cleaned_answer,
         "분석 결과": analysis_result,
         "후속 질문": follow_up_question
     }
