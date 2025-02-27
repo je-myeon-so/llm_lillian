@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
-from src.backend.router import question_router, analysis_router, user_router
+from src.backend.router import question_router, analysis_router #,user_router
 from src.backend.database_config import engine
 from src.backend.model import Question, UserAnswer, Feedback, User
 from src.backend.router.db_qa_routes import router as qa_router
@@ -25,7 +25,7 @@ def read_root():
 # 백엔드 라우터 등록
 app.include_router(question_router, prefix="/api")
 app.include_router(analysis_router, prefix="/api")
-app.include_router(user_router)
+#app.include_router(user_router)
 app.include_router(qa_router, prefix="/questions")
 app.include_router(qa_query_router)
 
