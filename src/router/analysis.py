@@ -14,7 +14,7 @@ class FollowUpRequest(BaseModel):
     answer: str
 
 @router.post("/answers/{answerId}/feedback")
-async def analyze_answer_api(request: AnswerRequest):
+async def analyze_answer_api(answerId: int, request: AnswerRequest):
     job_role = '개발자'
     try:
         result = analyze_text_with_gpt(request.question, request.answer, job_role)
@@ -23,7 +23,7 @@ async def analyze_answer_api(request: AnswerRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/api/questions/{questionid}/follow-up")
-async def generate_follow_up_api(request: FollowUpRequest):
+async def generate_follow_up_api(questionid: int, request: FollowUpRequest):
     job_role = '개발자'
     try:
         result = generate_follow_up(request.answer, request.question, job_role)
