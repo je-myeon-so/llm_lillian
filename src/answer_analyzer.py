@@ -94,12 +94,14 @@ def generate_follow_up(answer, question, job_role):
     - 단순한 추가 설명 요청이 아니라, 실무에서 어떻게 적용하는지 또는 깊이 있는 지식을 확인하는 질문이어야 합니다.
     - 1개의 질문을 생성하세요.
     - JSON 형식으로 제공해주세요.
+    -  questiontype은 수정하지 마세요. 
 
     **JSON 출력 예시 (반드시 이 형식을 따르세요):**
     ```json
     {{
         "question": {{
             "question_text": "이 직무에 지원하게 된 동기는 무엇인가요?"
+            'questiontype' : '꼬리질문'
         }}
     }}
     ```
@@ -126,13 +128,15 @@ def generate_follow_up(answer, question, job_role):
         except json.JSONDecodeError:
             follow_up = {
                 "question": {
-                    "question_text": "이 직무에 지원하게 된 동기는 무엇인가요?"
+                    "questiontext": "이 직무에 지원하게 된 동기는 무엇인가요?",
+                    'questiontype' : '꼬리질문'
                 }
             }
     else:
         follow_up = {
             "question": {
-                "question_text": "이 직무에 지원하게 된 동기는 무엇인가요?"
+                "questiontext": "이 직무에 지원하게 된 동기는 무엇인가요?",
+                'questiontype' : '꼬리질문'
             }
         }
 
