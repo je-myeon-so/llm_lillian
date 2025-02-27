@@ -85,7 +85,10 @@ async def answer_question(questionnum: int, username = Form(...), file: UploadFi
                     db.commit()
                     db.refresh(feedback)
 
-            return {"message": "면접이 종료되었습니다."}
+            return {"question": {
+                "question_text": "면접 질문을 더 받아보시겠습니까?",
+                "question_type": "면접 종료"
+            }}
 
         result = generate_follow_up(answer=transcription.text, question=question.questiontext, job_role='개발자')
         questiontext = result.get('question', {}).get('question_text', '')
