@@ -1,2 +1,2 @@
-# llm_lillian
-lillian 부분 추후 환경 통합할 예정. 
+# llm_prompt_repo
+메인 통합 레포
