@@ -1,5 +1,4 @@
 from src.backend.database_config import Base, engine
-from src.backend.user import User
 from src.backend.model import Question, UserAnswer, Feedback
 
 def create_all_tables():
