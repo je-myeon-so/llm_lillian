@@ -150,9 +150,8 @@ def analyze_answer(question, answer, job_role):
     follow_up_question = generate_follow_up(cleaned_answer, question, job_role)
 
     final_result = {
-        "원본 답변": answer,
-        "분석 결과": analysis_result,
-        "후속 질문": follow_up_question
+        "original_answer": answer,
+        "analysis_result": analysis_result,
     }
 
     return final_result
