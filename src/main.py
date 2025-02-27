@@ -5,6 +5,7 @@ from src.backend.model import Question, UserAnswer, Feedback, User
 from src.router.analysis import router as api_router_analysis
 from src.router.question_routes import router as api_router_generate
 from src.stt.stt import router as api_router_stt
+from src.router.interview import router as api_router_interview
 from src.router.user_login import router as login_router
 
 # 데이터베이스 테이블 생성
@@ -27,5 +28,5 @@ app.include_router(api_router_analysis, prefix="/api")
 app.include_router(api_router_generate, prefix="/api")
 
 app.include_router(api_router_stt, prefix="/api/stt")
-
+app.include_router(api_router_interview, prefix="/api/interview")
 app.include_router(login_router, prefix="/api")
