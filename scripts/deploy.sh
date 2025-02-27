@@ -1,4 +1,4 @@
-ENV_PATH="/home/ubuntu/env/.env"
+ENV_PATH="/home/ubuntu/.env"
 
 sudo docker ps -a -q --filter "name=app" | grep -q . && docker stop app && docker rm app | true
 
