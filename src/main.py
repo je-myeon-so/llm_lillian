@@ -8,6 +8,7 @@ from src.stt.stt import router as api_router_stt
 from src.router.interview import router as api_router_interview
 from src.router.user_login import router as login_router
 from src.router.result import router as api_router_result
+from fastapi.middleware.cors import CORSMiddleware
 
 # 데이터베이스 테이블 생성
 User.metadata.create_all(bind=engine)
@@ -20,6 +21,22 @@ app = FastAPI(
     description="API for analyzing interview answers and generating follow-up questions.",
     version="1.0.0"
 )
+
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 def read_root():
