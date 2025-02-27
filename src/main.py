@@ -15,6 +15,3 @@ def read_root():
 
 app.include_router(api_router_analysis, prefix="/api")
 app.include_router(api_router_generate, prefix="/api")
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
